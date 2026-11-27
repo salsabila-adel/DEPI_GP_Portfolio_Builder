@@ -1,0 +1,77 @@
+<mxfile host="Electron" agent="ChatGPT">
+  <diagram name="State Diagram" id="state-diagram">
+    <mxGraphModel dx="1428" dy="752" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="stitle" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=22;fontColor=#1f2937;" value="&lt;b&gt;PortfolioGenie&lt;/b&gt;&lt;br&gt;State Diagram — Portfolio lifecycle" vertex="1">
+          <mxGeometry height="60" width="600" x="300" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="s1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;fontStyle=1;spacing=8;" value="Draft&lt;br&gt;&lt;font style=&#39;font-weight:normal&#39;&gt;empty profile&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="190" x="30" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;fontStyle=1;spacing=8;" value="Importing&lt;br&gt;&lt;font style=&#39;font-weight:normal&#39;&gt;fetch repos&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="190" x="350" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;fontStyle=1;spacing=8;" value="Editing&lt;br&gt;&lt;font style=&#39;font-weight:normal&#39;&gt;multi-step form&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="190" x="710" y="290" as="geometry" />
+        </mxCell>
+        <mxCell id="s4" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;fontStyle=1;spacing=8;" value="Generating&lt;br&gt;&lt;font style=&#39;font-weight:normal&#39;&gt;AI prompts&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="190" x="920" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="s5" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;fontStyle=1;spacing=8;" value="Preview&lt;br&gt;&lt;font style=&#39;font-weight:normal&#39;&gt;live preview&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="190" x="520" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="s6" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=18;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=15;fontStyle=1;spacing=8;" value="Published&lt;br&gt;&lt;font style=&#39;font-weight:normal&#39;&gt;public link&lt;/font&gt;" vertex="1">
+          <mxGeometry height="90" width="190" x="110" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="s7" parent="1" style="ellipse;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="60" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="s8" parent="1" style="ellipse;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="60" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="se1" edge="1" parent="1" source="s7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=12;" target="s1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se2" edge="1" parent="1" source="s1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=12;" target="s2" value="connect GitHub">
+          <mxGeometry relative="1" x="-0.0667" y="10" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="se3" edge="1" parent="1" source="s2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=12;" target="s3" value="data fetched / manual entry">
+          <mxGeometry relative="1" x="0.0323" y="15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="se4" edge="1" parent="1" source="s3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=12;" target="s4" value="form valid">
+          <mxGeometry relative="1" x="0.1765" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="se5" edge="1" parent="1" source="s4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=12;" target="s5" value="content ready">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se6" edge="1" parent="1" source="s5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=12;" target="s3" value="needs changes">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se7" edge="1" parent="1" source="s5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=12;" target="s6" value="publish">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se8" edge="1" parent="1" source="s6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;fontSize=12;" target="s8" value="delete">
+          <mxGeometry relative="1" x="0.3548" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="se9" edge="1" parent="1" source="s4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;endArrow=block;endFill=1;fontSize=12;" target="s3" value="AI error">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1015" y="500" />
+              <mxPoint x="875" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
