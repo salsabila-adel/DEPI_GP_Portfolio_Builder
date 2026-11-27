@@ -5,8 +5,8 @@
 ## 📖 Overview
 
 Instead of building a portfolio from scratch, 
-PortfolioGenie connects to your GitHub account, fetches your projects, and displays them in a clean,
-ready-to-use portfolio website. AI tools help you fill in your information, so you spend less time writing and more time showcasing your work.
+PortfolioGenie connects to your GitHub account, fetches your projects, and displays them in a clean, ready-to-use portfolio website. 
+AI tools help you fill in your information, so you spend less time writing and more time showcasing your work.
 
 ## ✨ Features
 
@@ -21,7 +21,6 @@ ready-to-use portfolio website. AI tools help you fill in your information, so y
 - ⚛️ React
 - ⚡ Vite
 - 🎨 Bootstrap
-- (add any other libraries here)
 
 ## 🏁 Getting Started
 
