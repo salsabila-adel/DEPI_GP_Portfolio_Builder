@@ -1,0 +1,88 @@
+/* =========================================================
+   index.css  —  الفايل العام (بيتحمّل مرة واحدة في main.jsx)
+   فيه: الخطوط + متغيرات الألوان (Dark / Light) + الستايل الأساسي
+   ========================================================= */
+
+/* الخطوط: Kalam للعناوين، Inter للباقي (بنفس الأوزان اللي في ملف التصميم) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Kalam:wght@400;700&display=swap");
+
+/* ---------- 1) الوضع الداكن (الافتراضي) ---------- */
+:root {
+  /* الخطوط */
+  --font-display: "Kalam", "Segoe Print", "Comic Sans MS", cursive;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* الألوان */
+  --bg: #050305;
+  --surface: #120a10;
+  --input: #1b1118;
+  --border: #33202b;
+  --text: #f6eef2;
+  --muted: #a8939d;
+  --primary: #c2185b;
+  --primary-h: #d81b6a;
+  --tint: #2a0f1c;
+  --err: #ff6b8a;
+  --ok: #4ade80;
+  --glow: rgba(194, 24, 91, 0.45);
+
+  /* ألوان ثابتة: مش بتتغير بين Dark و Light */
+  --white: #ffffff;
+  --profile-grad-end: #6b0f3a;
+  --dots-overlay: rgba(0, 0, 0, 0.55);
+  --modal-overlay: rgba(0, 0, 0, 0.6);
+
+  color-scheme: dark;
+}
+
+/* ---------- 2) الوضع الفاتح (لما data-theme="light") ---------- */
+:root[data-theme="light"] {
+  --bg: #fbf6f8;
+  --surface: #ffffff;
+  --input: #f6edf1;
+  --border: #e8d4dc;
+  --text: #1d1218;
+  --muted: #6d5a63;
+  --primary: #a3124a;
+  --primary-h: #870e3d;
+  --tint: #f9e3ec;
+  --err: #c2284f;
+  --ok: #15803d;
+  --glow: rgba(163, 18, 74, 0.22);
+
+  color-scheme: light;
+}
+
+/* ---------- 3) الستايل الأساسي ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* كل العناوين h1 و h2 و h3 بخط Kalam */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+/* الأزرار وحقول الإدخال تاخد خط الصفحة (Inter) بدل خط المتصفح */
+button,
+input {
+  font-family: inherit;
+}
