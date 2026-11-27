@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PortfolioGenie</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Kalam:wght@400;700&display=swap">
+<style>
+:root{
+  --bg:#050305;--surface:#120a10;--input:#1b1118;--border:#33202b;--text:#f6eef2;--muted:#a8939d;
+  --primary:#c2185b;--primary-h:#d81b6a;--on-p:#fff;--glow:rgba(194,24,91,.45);--tint:#2a0f1c;--err:#ff6b8a;--ok:#4ade80;
+  --disp:'Kalam','Segoe Print','Comic Sans MS',cursive;--body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color-scheme:dark;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){--bg:#fbf6f8;--surface:#fff;--input:#f6edf1;--border:#e8d4dc;--text:#1d1218;--muted:#6d5a63;
+  --primary:#a3124a;--primary-h:#870e3d;--glow:rgba(163,18,74,.22);--tint:#f9e3ec;--err:#c2284f;--ok:#15803d;color-scheme:light}
+}
+:root[data-theme="light"]{--bg:#fbf6f8;--surface:#fff;--input:#f6edf1;--border:#e8d4dc;--text:#1d1218;--muted:#6d5a63;
+  --primary:#a3124a;--primary-h:#870e3d;--glow:rgba(163,18,74,.22);--tint:#f9e3ec;--err:#c2284f;--ok:#15803d;color-scheme:light}
+*{box-sizing:border-box;margin:0}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--text);font:15px/1.55 var(--body);min-height:100vh}
+h1,h2,h3{font-family:var(--disp);line-height:1.15;font-weight:700}
+a{color:inherit;text-decoration:none}
+svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button{font:inherit;cursor:pointer;color:inherit}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;display:flex;align-items:center;gap:16px;height:64px;padding:0 28px;background:var(--bg);border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:10px;font:500 20px var(--body)}
+.logo i{width:28px;height:28px;border-radius:6px;background:var(--primary);color:#fff;display:grid;place-items:center;font:700 15px var(--body);font-style:normal}
+.logo b{font-weight:500;color:var(--primary)}
+.nav{display:flex;gap:6px;margin:0 auto}
+.nav a{padding:8px 12px;color:var(--muted);border-bottom:1px solid transparent}
+.nav a.on{color:var(--text);border-color:var(--text)}
+.ib{width:40px;height:40px;border-radius:10px;border:1px solid var(--border);background:var(--surface);display:grid;place-items:center}
+.btn{height:44px;padding:0 22px;border-radius:999px;border:1px solid transparent;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:10px;background:transparent}
+.btn.p{background:var(--primary);color:var(--on-p);box-shadow:0 0 28px var(--glow)}.btn.p:hover{background:var(--primary-h)}
+.btn.o{border-color:var(--border)}.btn.sm{height:36px;padding:0 16px;font-size:14px}.btn.w{width:100%;border-radius:12px;height:48px}
+.sun{display:none}:root[data-theme="light"] .moon{display:none}:root[data-theme="light"] .sun{display:block}
+.scr{display:none}.scr.on{display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+/* hero */
+.hero{position:relative;overflow:hidden;text-align:center;padding:72px 24px 56px}
+.hero:before{content:"";position:absolute;left:50%;top:-40%;width:130%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 62%);border-bottom:1px solid var(--glow)}
+.hero>*{position:relative}
+.hero h1{font-size:clamp(30px,5vw,50px);font-weight:400}
+.hero h1 span{display:block;color:var(--primary)}
+.chips{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin:34px 0}
+.chip{background:var(--primary);color:#fff;padding:10px 16px;border-radius:8px;font:400 14px var(--disp);max-width:240px;text-align:left}
+.sm-t{color:var(--muted);margin-bottom:14px}
+.big{font-size:20px;height:56px;padding:0 44px}
+.stats{display:flex;justify-content:center;gap:36px;margin-top:40px;flex-wrap:wrap}
+.stats div{font:700 22px var(--disp)}.stats small{display:block;font:400 12px var(--body);color:var(--muted)}
+/* sections */
+.sec{padding:64px 0}.sec h2{font-size:32px;text-align:center;margin-bottom:8px}.lead{color:var(--muted);text-align:center;margin-bottom:36px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.card h3{font-size:20px}.card p{color:var(--muted);font-size:14px}
+.ic{width:42px;height:42px;border-radius:10px;background:var(--tint);color:var(--primary);display:grid;place-items:center}
+.vid{max-width:640px;margin:0 auto 28px;aspect-ratio:16/9;border-radius:16px;border:1px solid var(--border);background:radial-gradient(circle at 50% 40%,var(--glow),var(--surface) 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;text-align:center;padding:16px}
+.vid .pl{width:64px;height:64px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;box-shadow:0 0 28px var(--glow)}.vid .pl svg{fill:currentColor;stroke:none;width:26px;height:26px}.vid small{color:var(--muted)}
+.steps{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.step{display:flex;gap:16px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px}
+.step .n{width:38px;height:38px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font:700 18px var(--disp);flex:none}
+.step h3{font-size:19px;margin-bottom:2px}.step p{color:var(--muted);font-size:14px}
+/* forms */
+.fw{max-width:420px;margin:0 auto;padding:48px 24px;display:flex;flex-direction:column;gap:14px}
+.fw h1{font-size:34px}.sub{color:var(--muted)}
+.fld{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:500}
+.inp{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 14px;border-radius:12px;background:var(--input);border:1px solid var(--border);color:var(--muted)}
+.inp:focus-within{border-color:var(--primary);box-shadow:0 0 0 2px var(--primary)}
+.inp input,.inp textarea,.inp select{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--text);font:15px var(--body);padding:12px 0;resize:vertical}
+.inp select option{background:var(--surface)}
+.dv{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13px}.dv:before,.dv:after{content:"";flex:1;height:1px;background:var(--border)}
+.foot{text-align:center;color:var(--muted);font-size:14px}.foot a{color:var(--primary);font-weight:600}
+.ok{display:none;align-items:center;gap:8px;color:var(--ok);font-weight:500}.ok.on{display:flex}
+.two{display:grid;grid-template-columns:1.2fr .8fr;gap:24px;max-width:900px;margin:0 auto;padding:48px 24px}
+/* profile */
+.ph{display:flex;gap:24px;align-items:center;flex-wrap:wrap;padding:40px 0 24px}
+.av{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#6b0f3a);box-shadow:0 0 30px var(--glow);flex:none}
+.ph h1{font-size:32px}.ph .meta{color:var(--muted)}
+.acts{display:flex;gap:10px;flex-wrap:wrap;margin-left:auto}
+.st{display:flex;gap:32px;padding:16px 0 28px;border-bottom:1px solid var(--border);flex-wrap:wrap}.st b{font:700 22px var(--disp);display:block}.st small{color:var(--muted)}
+.wh{display:flex;justify-content:space-between;align-items:center;padding:28px 0 16px}.wh h2{font-size:26px}
+.work{position:relative}.work .th{height:110px;border-radius:10px;background:linear-gradient(135deg,var(--tint),var(--primary));opacity:.9}
+.tags{display:flex;gap:6px;flex-wrap:wrap}.tag{font-size:12px;padding:2px 10px;border-radius:99px;background:var(--tint);color:var(--primary);font-weight:600}
+.dots{position:absolute;top:30px;right:30px;width:34px;height:34px;border-radius:50%;border:0;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center}
+.menu{display:none;position:absolute;top:68px;right:30px;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:6px;min-width:140px;z-index:2}
+.menu.on{display:block}.menu button{display:flex;gap:8px;align-items:center;width:100%;padding:8px 10px;border:0;background:none;border-radius:8px;text-align:left}
+.menu button:hover{background:var(--tint)}.menu .del{color:var(--err)}
+.md{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;place-items:center;z-index:20;padding:20px}.md.on{display:grid}
+.md>div{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;max-width:380px;width:100%;display:flex;flex-direction:column;gap:12px}
+.md h3{font-size:22px}.md .r{display:flex;gap:10px;justify-content:flex-end}
+.chk{display:flex;gap:10px;align-items:center;font-size:14px}.chk input{accent-color:var(--primary);width:18px;height:18px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--surface);border:1px solid var(--border);padding:10px 18px;border-radius:99px;display:none;z-index:30}.toast.on{display:block}
+.ab{max-width:760px;margin:0 auto;padding:56px 24px;display:flex;flex-direction:column;gap:36px}
+.ab h1{font-size:40px;font-weight:400;text-align:center}.ab h1 span{color:var(--primary)}
+.ab>p{color:var(--muted);font-size:17px;text-align:center}
+.tl{display:flex;flex-direction:column;gap:0;border-left:2px solid var(--primary);margin-left:10px}
+.tl div{padding:0 0 22px 22px;position:relative}.tl div:before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--primary);box-shadow:0 0 12px var(--glow)}
+.tl b{font:700 18px var(--disp)}.tl p{color:var(--muted);font-size:14px}
+.soc{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.soc a{display:flex;align-items:center;gap:10px;padding:10px 18px;border:1px solid var(--border);border-radius:999px;background:var(--surface);font-weight:500}
+.soc a:hover{border-color:var(--primary)}.soc i{width:26px;height:26px;border-radius:50%;background:var(--primary);color:#fff;display:grid;place-items:center;font:700 13px var(--body);font-style:normal}
+.hint{color:var(--muted);font-size:12px}
+.wz{max-width:680px;margin:0 auto;padding:36px 24px;display:flex;flex-direction:column;gap:16px}
+.wtop{display:flex;justify-content:space-between;align-items:center}
+.sv{display:flex;gap:6px;align-items:center;color:var(--ok);font-size:13px}.sv svg{width:16px;height:16px}
+.pbar{height:6px;border-radius:99px;background:var(--border);overflow:hidden}.pbar i{display:block;height:100%;background:var(--primary);box-shadow:0 0 12px var(--glow);transition:width .3s}
+.wp{display:none;flex-direction:column;gap:14px}.wp.on{display:flex}.wp h1{font-size:30px}
+.ai{display:flex;gap:12px;align-items:center;background:var(--tint);border:1px solid var(--primary);border-radius:12px;padding:12px 14px;font-size:14px}.ai span{flex:1}
+.rp{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--surface)}.rp small{color:var(--muted);display:block}.rp input{accent-color:var(--primary);width:18px;height:18px}
+.tp{cursor:pointer}.tp.sel{border-color:var(--primary);box-shadow:0 0 0 2px var(--primary)}.tp .th{height:90px;border-radius:10px;background:linear-gradient(135deg,var(--tint),var(--primary))}
+.wn{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:8px}.wr{display:flex;gap:10px}
+body:not(.in) .auth-in{display:none}body.in .auth-out{display:none}
+.ed{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);max-width:1400px;margin:0 auto;min-height:calc(100vh - 64px)}
+.edl{padding:24px;display:flex;flex-direction:column;gap:16px;border-right:1px solid var(--border)}
+.edr{padding:24px;background:var(--surface);display:flex;flex-direction:column;gap:14px}
+.edh{display:flex;align-items:center;gap:10px}.live{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+.pf{border:1px solid var(--border);border-radius:16px;padding:28px;background:var(--bg);display:flex;flex-direction:column;gap:20px}
+.pf h1{font-size:34px}.pf .t{color:var(--primary);font-weight:600}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.rel{position:relative}
+.aim{display:none;position:absolute;right:0;top:100%;margin-top:6px;z-index:6;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:6px;min-width:230px}.aim.on{display:block}
+.aim button{display:block;width:100%;text-align:left;padding:8px 10px;border:0;background:none;border-radius:8px}.aim button:hover{background:var(--tint)}
+.lnk{background:none;border:0;color:var(--primary);font-size:12px;font-weight:600;padding:0}
+.pj{border:1px solid var(--border);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--surface)}.pj .inp{min-height:40px}
+@media (max-width:820px){.ed{grid-template-columns:1fr}.edl{border:0}.g2{grid-template-columns:1fr}}
+.pv{display:flex;flex-direction:column;gap:12px;align-self:start}
+.lk{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ok);font-weight:500}
+footer{border-top:1px solid var(--border);padding:24px;color:var(--muted);font-size:13px;text-align:center}
+@media (max-width:820px){.grid,.two{grid-template-columns:1fr}.nav a:not(.on){display:none}.bar{padding:0 14px}.hide-m{display:none}.acts{margin-left:0}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="logo" href="#home"><i>P</i>Portfolio<b>Genie</b></a>
+  <nav class="nav" aria-label="Main">
+    <a href="#home" data-n="home">Home</a><a href="#features" data-n="features">Features</a><a href="#how" data-n="how">How it works</a><a href="#about" data-n="about">About</a><a href="#contact" data-n="contact">Contacts</a>
+  </nav>
+  <a class="btn o sm hide-m auth-out" href="#login">Log in</a>
+  <a class="btn p sm hide-m auth-out" href="#signup">Sign up</a>
+  <button class="btn o sm auth-in" id="logout">Log out</button>
+  <button class="ib" id="th" aria-label="Switch dark and light mode"><svg class="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+</header>
+
+<main class="scr on" id="home">
+  <section class="hero">
+    <h1>Your work, beautifully told.<span>Your portfolio, ready to be found.</span></h1>
+    <div class="chips">
+      <div class="chip">Build an interactive portfolio in under ten minutes.</div>
+      <div class="chip">Get matched with real jobs across MENA &amp; Europe.</div>
+      <div class="chip">Stay quietly discoverable while recruiters come to you.</div>
+    </div>
+    <p class="sm-t">✨ A little space for your best work</p>
+    <a class="btn p big" href="#signup">Start Building Free</a>
+    <div class="stats"><div>4000+<small>portfolios published</small></div><div>&lt; 10 min.<small>to first published portfolio</small></div><div>AI<small>Powered Portfolio</small></div></div>
+  </section>
+</main>
+
+<main class="scr" id="features">
+  <div class="wrap sec">
+    <h2>Everything your portfolio needs</h2><p class="lead">Built for developers first, open to every creative field.</p>
+    <div class="grid">
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.500 1.300a12 12 0 0 0-6.200 0C6.500 2.800 5.400 3.100 5.400 3.100"/></svg></span><h3>GitHub import</h3><p>Pull in repos, READMEs, stars and languages with one click.</p></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l1.800 5.200L19 10l-5.200 1.800L12 17l-1.800-5.200L5 10l5.200-1.800z"/></svg></span><h3>AI writing</h3><p>Generate your bio and project descriptions in your own tone.</p></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></span><h3>Ready templates</h3><p>Pick a design, switch any time, keep your content.</p></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></span><h3>Your own domain</h3><p>Publish on a free link or connect your own address.</p></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16"/></svg></span><h3>PDF export</h3><p>Download your whole portfolio as a clean PDF.</p></div>
+      <div class="card"><span class="ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.500-3.500"/></svg></span><h3>Get discovered</h3><p>Be matched with real jobs while recruiters find you.</p></div>
+    </div>
+  </div>
+</main>
+
+<main class="scr" id="how">
+  <div class="wrap sec">
+    <h2>From idea to live portfolio</h2><p class="lead">Five steps. No design skills needed.</p>
+    <div class="vid" id="vid" role="button" tabindex="0" aria-label="Play demo video"><span class="pl"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span><b>Watch the demo</b><small>See how to build a portfolio in about a minute</small></div>
+    <div class="steps">
+      <div class="step"><span class="n">1</span><div><h3>Create your account</h3><p>Sign up with GitHub or email.</p></div></div>
+      <div class="step"><span class="n">2</span><div><h3>Import your work</h3><p>Connect GitHub or upload projects with images and links.</p></div></div>
+      <div class="step"><span class="n">3</span><div><h3>Pick a template</h3><p>Browse designs and switch without losing content.</p></div></div>
+      <div class="step"><span class="n">4</span><div><h3>Customize</h3><p>Edit text, colors and sections. Let AI write the first draft.</p></div></div>
+      <div class="step"><span class="n">5</span><div><h3>Publish and share</h3><p>Go live on a free link, add your domain, or download a PDF.</p></div></div>
+    </div>
+    <p style="text-align:center;margin-top:32px"><a class="btn p" href="#signup">Start Building Free</a></p>
+  </div>
+</main>
+
+<main class="scr" id="about">
+  <div class="ab">
+    <h1>Who we are<br><span>and why we built PortfolioGenie</span></h1>
+    <p>We are a small team of developers and designers who saw talented people lose opportunities because their work was hard to show. PortfolioGenie lets anyone turn their projects into a live portfolio in minutes.</p>
+    <div>
+      <h2 style="font-size:26px;margin-bottom:18px">Our story</h2>
+      <div class="tl">
+        <div><b>[Year] · The idea</b><p>The founders start sketching a portfolio builder made for developers.</p></div>
+        <div><b>[Year] · First version</b><p>GitHub import and the first templates go live.</p></div>
+        <div><b>[Year] · 4000+ portfolios</b><p>The community grows across MENA and Europe.</p></div>
+        <div><b>Today · AI and job matching</b><p>AI writing and job matching help people get discovered.</p></div>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="card"><h3>Our mission</h3><p>Help every builder tell their work story beautifully.</p></div>
+      <div class="card"><h3>Open to everyone</h3><p>Developers first, and every creative field after.</p></div>
+      <div class="card"><h3>Quietly helpful</h3><p>Be discoverable while recruiters come to you.</p></div>
+    </div>
+    <div>
+      <h2 style="font-size:26px;margin-bottom:6px;text-align:center">Find us online</h2>
+      <p class="lead">Follow our updates or message us directly.</p>
+      <div class="soc">
+        <a href="https://www.linkedin.com/" target="_blank" rel="noopener"><i>in</i>LinkedIn</a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener"><i>f</i>Facebook</a>
+        <a href="https://wa.me/" target="_blank" rel="noopener"><i>W</i>WhatsApp</a>
+        <a href="https://github.com/" target="_blank" rel="noopener"><i>G</i>GitHub</a>
+        <a href="https://x.com/" target="_blank" rel="noopener"><i>X</i>X</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<main class="scr" id="contact">
+  <div class="two">
+    <form class="fw" style="padding:0" id="cf">
+      <h1>Get in touch</h1><p class="sub">Questions or feedback? We reply within 2 working days.</p>
+      <label class="fld">Name<span class="inp"><input required placeholder="Your name"></span></label>
+      <label class="fld">Email<span class="inp"><input type="email" required placeholder="you@example.com"></span></label>
+      <label class="fld">Subject<span class="inp"><select><option>General</option><option>Support</option><option>Feedback</option><option>Partnership</option></select></span></label>
+      <label class="fld">Message<span class="inp"><textarea rows="4" required placeholder="How can we help?"></textarea></span></label>
+      <button class="btn p w">Send message</button>
+      <p class="ok" id="cok"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg>Thanks, your message was sent.</p>
+    </form>
+    <aside class="card" style="align-self:start;margin-top:8px"><h3>Contact details</h3><p>hello@portfoliogenie.app</p><p>Support hours: Sunday to Thursday</p><p>GitHub · LinkedIn · X</p></aside>
+  </div>
+</main>
+
+<main class="scr" id="signup">
+  <div class="fw">
+    <h1>Create your portfolio</h1><p class="sub">Start free. Publish in minutes.</p>
+    <button class="btn p w">Continue with GitHub</button><button class="btn o w">Continue with Google</button>
+    <div class="dv">or</div>
+    <label class="fld">Full name<span class="inp"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><input placeholder="Your full name"></span></label>
+    <label class="fld">Email<span class="inp"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><input type="email" placeholder="you@example.com"></span></label>
+    <label class="fld">Password<span class="inp"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><input type="password" placeholder="8+ characters"></span></label>
+    <label class="chk"><input type="checkbox">I agree to the Terms and Privacy Policy</label>
+    <a class="btn p w" href="#profile" data-login>Create account</a>
+    <p class="foot">Already have an account? <a href="#login">Log in</a></p>
+  </div>
+</main>
+
+<main class="scr" id="login">
+  <div class="fw">
+    <h1>Welcome back</h1><p class="sub">Log in to continue building your portfolio.</p>
+    <button class="btn p w">Continue with GitHub</button><button class="btn o w">Continue with Google</button>
+    <div class="dv">or</div>
+    <label class="fld">Email<span class="inp"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><input type="email" placeholder="you@example.com"></span></label>
+    <label class="fld">Password<span class="inp"><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><input type="password" placeholder="Your password"></span></label>
+    <div style="display:flex;justify-content:space-between;font-size:13px"><label class="chk"><input type="checkbox">Remember me</label><a class="foot" href="#login" style="color:var(--primary)">Forgot password?</a></div>
+    <a class="btn p w" href="#profile" data-login>Log in</a>
+    <p class="foot">New here? <a href="#signup">Create an account</a></p>
+  </div>
+</main>
+
+<main class="scr" id="profile">
+  <div class="wrap">
+    <div class="ph">
+      <div class="av" id="pav"></div>
+      <div><h1 id="phn">Nour Hassan</h1><p class="meta" id="pht">Frontend developer · Cairo</p><p class="meta">Building fast, accessible interfaces.</p><p class="meta"><a id="phg" href="https://github.com/nour-hassan" target="_blank" rel="noopener" style="color:var(--primary)">github.com/nour-hassan</a></p></div>
+      <div class="acts"><a class="btn o sm" href="#editprofile">Edit profile</a><a class="btn p sm" href="#outreach">Reach companies</a><button class="btn o sm">Share</button></div>
+    </div>
+    <div class="st"><div><b id="cnt">3</b><small>portfolios</small></div><div><b>1,248</b><small>views</small></div><div><b>608</b><small>GitHub stars</small></div></div>
+    <div class="wh"><h2>My portfolios</h2><a class="btn p sm" href="#create">+ New portfolio</a></div>
+    <div class="grid" id="works" style="padding-bottom:56px">
+      <div class="card work"><div class="th"></div><h3>Developer Portfolio</h3><p>Terminal template · Updated 2 days ago</p><div class="tags"><span class="tag">Live</span><span class="tag">3 projects</span></div>
+        <button class="dots" aria-label="Work options">⋯</button><div class="menu"><button>Edit</button><button class="del">Delete</button></div></div>
+      <div class="card work"><div class="th"></div><h3>Freelance Showcase</h3><p>Case study template · Updated last week</p><div class="tags"><span class="tag">Live</span><span class="tag">5 projects</span></div>
+        <button class="dots" aria-label="Work options">⋯</button><div class="menu"><button>Edit</button><button class="del">Delete</button></div></div>
+      <div class="card work"><div class="th"></div><h3>Job Search 2026</h3><p>Journal template · Draft</p><div class="tags"><span class="tag">Draft</span><span class="tag">2 projects</span></div>
+        <button class="dots" aria-label="Work options">⋯</button><div class="menu"><button>Edit</button><button class="del">Delete</button></div></div>
+    </div>
+  </div>
+</main>
+
+<main class="scr" id="create">
+  <div class="wz">
+    <div class="wtop"><b id="wst">Step 1 of 5</b><span class="sv" id="wsv"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg>Saved</span></div>
+    <div class="pbar"><i id="wpb" style="width:20%"></i></div>
+    <p class="hint" id="wlb">Basics</p>
+    <section class="wp on" data-s="1">
+      <h1>Let’s start with you</h1><p class="sub">Four quick answers. You can change everything later.</p>
+      <label class="fld">Your name<span class="inp"><input placeholder="Nour Hassan"></span></label>
+      <label class="fld">Your field<span class="inp"><select><option>Software developer</option><option>Designer</option><option>Photographer</option><option>Writer</option><option>Student</option></select></span></label>
+      <label class="fld">Main goal<span class="inp"><select><option>Get a job</option><option>Find freelance clients</option><option>Show my work</option></select></span></label>
+      <label class="fld">Headline<span class="inp"><input id="whead" placeholder="One line about what you do"></span></label>
+      <div class="ai"><span>✨ AI suggestion: “Frontend developer building fast, accessible interfaces.”</span><button class="btn o sm" id="wuse">Use this</button></div>
+      <div class="wn"><span></span><div class="wr"><button class="btn o sm" data-nx="1">Skip</button><button class="btn p sm" data-nx="1">Continue</button></div></div>
+    </section>
+    <section class="wp" data-s="2">
+      <h1>Pick your best work</h1><p class="sub">We read your public GitHub repos. AI marked the three that stand out.</p>
+      <span class="lk"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg>GitHub connected</span>
+      <button class="btn o sm" id="wtop3" style="align-self:flex-start">Select AI picks</button>
+      <div id="wrepos" style="display:flex;flex-direction:column;gap:8px">
+        <label class="rp"><input type="checkbox" checked><span style="flex:1"><b>realtime-chat</b><small>TypeScript · ★ 482</small></span><span class="tag">AI pick</span></label>
+        <label class="rp"><input type="checkbox" checked><span style="flex:1"><b>design-tokens-cli</b><small>Rust · ★ 126</small></span><span class="tag">AI pick</span></label>
+        <label class="rp"><input type="checkbox" checked><span style="flex:1"><b>job-match-api</b><small>Python · ★ 64</small></span><span class="tag">AI pick</span></label>
+        <label class="rp"><input type="checkbox"><span style="flex:1"><b>dotfiles</b><small>Shell · ★ 3</small></span></label>
+        <label class="rp"><input type="checkbox"><span style="flex:1"><b>old-todo-app</b><small>JavaScript · ★ 1</small></span></label>
+      </div>
+      <div class="wn"><button class="btn o sm" data-nx="-1">Back</button><div class="wr"><button class="btn o sm" data-nx="1">Skip</button><button class="btn p sm" data-nx="1">Continue</button></div></div>
+    </section>
+    <section class="wp" data-s="3">
+      <h1>Choose a look</h1><p class="sub">Based on your field, AI recommends Terminal. Switch any time.</p>
+      <div class="grid"><div class="card tp sel"><div class="th"></div><h3>Terminal</h3><span class="tag" style="align-self:flex-start">Recommended</span></div><div class="card tp"><div class="th"></div><h3>Case study</h3></div><div class="card tp"><div class="th"></div><h3>Journal</h3></div></div>
+      <div class="wn"><button class="btn o sm" data-nx="-1">Back</button><div class="wr"><button class="btn o sm" data-nx="1">Skip</button><button class="btn p sm" data-nx="1">Continue</button></div></div>
+    </section>
+    <section class="wp" data-s="4">
+      <h1>Add your words</h1><p class="sub">Let AI write a first draft from your repos, then edit it.</p>
+      <button class="btn p sm" id="wai" style="align-self:flex-start">✨ Write with AI</button>
+      <label class="fld">About you<span class="inp"><textarea id="wbio" rows="3" placeholder="Short bio"></textarea></span></label>
+      <label class="fld">realtime-chat<span class="inp"><textarea id="wd1" rows="2" placeholder="What it does"></textarea></span></label>
+      <label class="fld">design-tokens-cli<span class="inp"><textarea id="wd2" rows="2" placeholder="What it does"></textarea></span></label>
+      <div class="wn"><button class="btn o sm" data-nx="-1">Back</button><div class="wr"><button class="btn o sm" data-nx="1">Skip</button><button class="btn p sm" data-nx="1">Continue</button></div></div>
+    </section>
+    <section class="wp" data-s="5">
+      <h1>Ready to publish</h1><p class="sub">Check the summary, choose your link, and go live.</p>
+      <div class="card"><p><b>Template:</b> Terminal</p><p><b>Projects:</b> 3 from GitHub</p><p><b>Text:</b> bio and project descriptions</p></div>
+      <label class="fld">Your link<span class="inp"><input value="nour.portfoliogenie.app"></span></label>
+      <div class="wn"><button class="btn o sm" data-nx="-1">Back</button><button class="btn p sm" id="wpub">Publish portfolio</button></div>
+    </section>
+  </div>
+</main>
+
+<main class="scr" id="editor">
+  <div class="ed">
+    <section class="edl">
+      <h1 style="font-size:28px">Edit portfolio</h1>
+      <p class="hint">Use ✨ AI Assist in any field. Every AI edit can be undone.</p>
+      <label class="fld">Full name<span class="inp"><input id="en"></span></label>
+      <div class="fld rel"><span style="display:flex;justify-content:space-between">Headline<button class="lnk" id="ut" hidden>Undo AI edit</button></span>
+        <span class="inp"><input id="et"><button class="btn p sm ait" data-m="mt" type="button">✨ AI</button></span>
+        <div class="aim" id="mt"><button data-ai="title:polish">✨ More polished</button><button data-ai="title:startup">🚀 Startup style</button><button data-ai="title:concise">✂️ Shorter</button></div></div>
+      <div class="fld rel"><span style="display:flex;justify-content:space-between">About you<button class="lnk" id="ub" hidden>Undo AI edit</button></span>
+        <span class="inp" style="align-items:flex-start"><textarea id="eb" rows="4"></textarea></span>
+        <button class="btn p sm ait" data-m="mb" type="button" style="align-self:flex-end">✨ AI Assist</button>
+        <div class="aim" id="mb" style="top:auto;bottom:100%"><button data-ai="bio:professional">✨ Improve wording</button><button data-ai="bio:recruiter">🎯 Aim at recruiters</button><button data-ai="bio:shorter">✂️ Make it shorter</button><button data-ai="bio:scratch">💡 Write a new one</button></div></div>
+      <div class="fld">Skills, separated by commas<span class="inp"><input id="es"></span><button class="lnk" id="esx" style="align-self:flex-start">✨ Add skills from my projects</button></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px"><h3 style="font-size:20px">Projects <span class="tag" id="ecnt">0</span></h3><span style="display:flex;gap:8px"><button class="btn o sm" id="egh">Import from GitHub</button><button class="btn o sm" id="eadd">+ New project</button></span></div>
+      <div id="eprojs" style="display:flex;flex-direction:column;gap:12px"></div>
+    </section>
+    <section class="edr">
+      <div class="edh"><i class="live"></i><b>Live preview</b><span class="hint" style="margin-left:auto">portfoliogenie.app/u/nour-hassan</span>
+        <span class="rel"><button class="ib" id="emore" aria-label="Portfolio options">⋯</button><div class="aim" id="emenu"><button data-a="share">Share link</button><button data-a="pdf">Download PDF</button><button data-a="del" style="color:var(--err)">Delete portfolio</button></div></span></div>
+      <div class="pf"><div><h1 id="pn"></h1><p class="t" id="pt"></p><p id="pb" style="color:var(--muted);margin-top:8px"></p></div><div class="tags" id="ps"></div><div class="g2" id="pp"></div></div>
+    </section>
+  </div>
+</main>
+<div class="md" id="mgh"><div style="max-width:460px"><h3>Import from GitHub</h3><p class="sub">Pick the repos to add. These are demo repos.</p><div id="rl" style="display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto"></div><label class="chk"><input type="checkbox" id="rai" checked>✨ Write descriptions with AI</label><div class="r"><button class="btn o sm" data-c>Cancel</button><button class="btn p sm" id="rim">Add selected</button></div></div></div>
+<div class="md" id="mdp"><div><h3>Delete this portfolio?</h3><p class="sub">All content in the editor will be cleared.</p><div class="r"><button class="btn o sm" data-c>Cancel</button><button class="btn sm" style="background:var(--err);color:#fff" id="ydp">Delete</button></div></div></div>
+
+<main class="scr" id="editprofile">
+  <div class="fw">
+    <h1>Edit profile</h1><p class="sub">Update how you appear on your portfolios.</p>
+    <div style="display:flex;align-items:center;gap:16px"><div class="av" id="epav" style="width:80px;height:80px"></div><label class="btn o sm" style="cursor:pointer">Change photo<input type="file" id="epf" accept="image/*" hidden></label></div>
+    <label class="fld">Name<span class="inp"><input id="epn"></span></label>
+    <label class="fld">Job title<span class="inp"><input id="ept"></span></label>
+    <label class="fld">GitHub link<span class="inp"><input id="epg" placeholder="https://github.com/username"></span></label>
+    <button class="btn p w" id="eps">Save changes</button>
+    <a class="btn o w" href="#profile">Cancel</a>
+  </div>
+</main>
+
+<main class="scr" id="outreach">
+  <div class="two" style="max-width:1000px">
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <h1 style="font-size:34px">Reach companies</h1>
+      <p class="sub">We write a message with your portfolio link and a short proposal. You review it and send it yourself.</p>
+      <span class="lk"><svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg>Signed in with LinkedIn</span>
+      <label class="fld">Company<span class="inp"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.500-3.500"/></svg><input id="ocomp" placeholder="Company name"></span></label>
+      <label class="fld">Role you want<span class="inp"><input id="orole" placeholder="Frontend developer"></span></label>
+      <div class="fld">Projects to mention
+        <div id="oprojs" style="display:flex;flex-direction:column;gap:8px;font-weight:400">
+          <label class="chk"><input type="checkbox" value="realtime-chat" checked>realtime-chat</label>
+          <label class="chk"><input type="checkbox" value="design-tokens-cli" checked>design-tokens-cli</label>
+          <label class="chk"><input type="checkbox" value="job-match-api">job-match-api</label>
+        </div>
+      </div>
+      <label class="fld">Tone<span class="inp"><select id="otone"><option>Friendly</option><option>Formal</option><option>Short</option></select></span></label>
+      <button class="btn p w" id="ogen">Generate with AI</button>
+      <p class="hint">3 of 5 drafts left today</p>
+    </div>
+    <aside class="card pv">
+      <h3>Your message</h3>
+      <div class="inp" style="align-items:flex-start"><textarea id="omsg" rows="12" placeholder="Your draft appears here. Edit it freely."></textarea></div>
+      <button class="btn o w" id="ocopy">Copy message</button>
+      <button class="btn p w" id="oopen">Open company on LinkedIn</button>
+      <p class="hint">Paste the message in LinkedIn and press send yourself. PortfolioGenie never sends for you.</p>
+    </aside>
+  </div>
+</main>
+
+<div class="md" id="mdel"><div><h3>Delete this portfolio?</h3><p class="sub">This cannot be undone.</p><div class="r"><button class="btn o sm" data-c>Cancel</button><button class="btn sm" style="background:var(--err);color:#fff" id="yes">Delete</button></div></div></div>
+<div class="md" id="mpdf"><div><h3>Download as PDF</h3>
+  <label class="chk"><input type="radio" name="l" checked>Compact</label><label class="chk"><input type="radio" name="l">Detailed</label>
+  <label class="chk"><input type="checkbox" checked>Include all works</label><label class="chk"><input type="checkbox" checked>Dark theme</label>
+  <div class="r"><button class="btn o sm" data-c>Cancel</button><button class="btn p sm" id="gen">Generate PDF</button></div></div></div>
+<div class="toast" id="toast"></div>
+<footer>© 2026 PortfolioGenie · Terms · Privacy</footer>
+
+<script>
+(function(){
+  var IN=false;try{IN=localStorage.getItem('pg_in')==='1'}catch(e){}document.body.classList.toggle('in',IN);
+  var R=document.documentElement,$=function(s){return document.querySelector(s)},$$=function(s){return document.querySelectorAll(s)};
+  function show(){var h=(location.hash||'#home').slice(1);if(!document.getElementById(h))h='home';h=gate(h);
+    $$('.scr').forEach(function(s){s.classList.toggle('on',s.id===h)});
+    $$('.nav a').forEach(function(a){a.classList.toggle('on',a.dataset.n===h||(a.dataset.n==='home'&&h==='profile'&&IN))});window.scrollTo(0,0)}
+  addEventListener('hashchange',show);show();
+  $('#th').onclick=function(){var d=R.dataset.theme?R.dataset.theme==='dark':!matchMedia('(prefers-color-scheme: light)').matches;R.dataset.theme=d?'light':'dark'};
+  function toast(t){var e=$('#toast');e.textContent=t;e.classList.add('on');setTimeout(function(){e.classList.remove('on')},2400)}
+  var target=null;
+  $('#works').addEventListener('click',function(e){
+    var d=e.target.closest('.dots'),del=e.target.closest('.del');
+    if(d){var m=d.nextElementSibling,o=m.classList.contains('on');$$('.menu').forEach(function(x){x.classList.remove('on')});if(!o)m.classList.add('on');return}
+    if(del){target=del.closest('.work');$$('.menu').forEach(function(x){x.classList.remove('on')});$('#mdel').classList.add('on')}
+  });
+  $('#yes').onclick=function(){if(target){target.remove();$('#cnt').textContent=$$('.work').length;toast('Portfolio deleted')}$('#mdel').classList.remove('on')};
+  $$('.menu').forEach(function(m){m.innerHTML='<button data-a="edit">Edit</button><button data-a="share">Share link</button><button data-a="pdf">Download PDF</button><button class="del" data-a="del">Delete</button>'});
+  $('#works').addEventListener('click',function(e){var b=e.target.closest('.menu button[data-a]');if(!b||b.dataset.a==='del')return;$$('.menu').forEach(function(x){x.classList.remove('on')});var a=b.dataset.a;
+    if(a==='edit')location.hash='#editor';else if(a==='share'){try{navigator.clipboard.writeText('https://nour.portfoliogenie.app')}catch(x){}toast('Link copied')}else $('#mpdf').classList.add('on')});
+  var ws=1,wn=['Basics','Projects','Template','Words','Review'],wt;
+  function wgo(n){ws=Math.max(1,Math.min(5,n));$$('.wp').forEach(function(p){p.classList.toggle('on',+p.dataset.s===ws)});$('#wst').textContent='Step '+ws+' of 5';$('#wpb').style.width=ws*20+'%';$('#wlb').textContent=wn[ws-1];window.scrollTo(0,0)}
+  $$('[data-nx]').forEach(function(b){b.onclick=function(){wgo(ws+ +b.dataset.nx)}});
+  addEventListener('hashchange',function(){if(location.hash==='#create')wgo(1)});
+  $('#create').addEventListener('input',function(){var s=$('#wsv');s.lastChild.textContent='Saving…';clearTimeout(wt);wt=setTimeout(function(){s.lastChild.textContent='Saved'},700)});
+  $('#wuse').onclick=function(){$('#whead').value='Frontend developer building fast, accessible interfaces.';toast('Headline added')};
+  $('#wtop3').onclick=function(){$$('#wrepos input').forEach(function(c,i){c.checked=i<3});toast('AI picks selected')};
+  $$('.tp').forEach(function(c){c.onclick=function(){$$('.tp').forEach(function(x){x.classList.remove('sel')});c.classList.add('sel')}});
+  $('#wai').onclick=function(){$('#wbio').value='Frontend developer who builds fast, accessible interfaces. I like turning complex tools into simple ones, and I’m looking for a team that ships often.';$('#wd1').value='A group chat app with typing indicators and offline sync, built with TypeScript and React.';$('#wd2').value='A command line tool that turns Figma variables into CSS and JSON design tokens, written in Rust.';toast('Draft ready. Edit anything you like')};
+  $('#wpub').onclick=function(){toast('Portfolio published');location.hash='#profile'};
+  function gate(h){if(IN&&(h==='home'||h==='signup'||h==='login'))return 'profile';if(!IN&&(h==='profile'||h==='create'||h==='editor'||h==='outreach'||h==='editprofile'))return 'login';return h}
+  function setIn(v){IN=v;try{localStorage.setItem('pg_in',v?'1':'0')}catch(e){}document.body.classList.toggle('in',v);lab();show()}
+  function lab(){$('.nav a[data-n=home]').textContent=IN?'My portfolios':'Home'}lab();
+  $('#vid').onclick=function(){toast('Demo video will play here')};$('#vid').onkeydown=function(e){if(e.key==='Enter')this.click()};
+  document.addEventListener('click',function(e){if(e.target.closest('[data-login]'))setIn(true);if(e.target.closest('#logout')){setIn(false);location.hash='#home'}});
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var S={name:'Nour Hassan',title:'Full-Stack Software Engineer',bio:'I am a passionate developer who loves building modern web apps and clean interfaces.',skills:['React','TypeScript','Python','Git'],projects:[{id:1,name:'realtime-chat',d:'Group chat with typing indicators and offline sync.',t:['TypeScript','React'],s:482},{id:2,name:'design-tokens-cli',d:'Turn Figma variables into CSS and JSON tokens.',t:['Rust','CLI'],s:126}]},U={};
+  var R2=[{id:'g1',n:'Crime-Management-System',r:'Java desktop app for managing crime records.',p:'A case management system in Java and MySQL with role-based access and fast record search.',t:['Java','MySQL'],s:19},{id:'g2',n:'FaceMask-Detection-YOLOv8',r:'Real-time face mask detection.',p:'Real-time mask detection built on YOLOv8 and OpenCV, with live webcam alerts.',t:['Python','YOLOv8'],s:31},{id:'g3',n:'Smart-Task-Dashboard',r:'Kanban board with drag and drop.',p:'A Kanban dashboard with smooth drag-and-drop workflows and synced light and dark themes.',t:['TypeScript','React'],s:12}];
+  function pv(){$('#pn').textContent=S.name||'Your name';$('#pt').textContent=S.title;$('#pb').textContent=S.bio;$('#ps').innerHTML=S.skills.map(function(k){return '<span class="tag">'+esc(k)+'</span>'}).join('');$('#pp').innerHTML=S.projects.length?S.projects.map(function(p){return '<div class="card"><h3>'+esc(p.name)+'</h3><p>'+esc(p.d)+'</p><div class="tags">'+p.t.map(function(t){return '<span class="tag">'+esc(t)+'</span>'}).join('')+'</div></div>'}).join(''):'<p class="sub">No projects yet. Import from GitHub or add one.</p>'}
+  function pl(){$('#ecnt').textContent=S.projects.length;$('#eprojs').innerHTML=S.projects.map(function(p){return '<div class="pj rel"><span style="display:flex;gap:8px"><span class="inp" style="flex:1"><input data-id="'+p.id+'" data-f="name" value="'+esc(p.name)+'"></span><button class="ib" data-del="'+p.id+'" aria-label="Delete project">✕</button></span>'+(U['p'+p.id]?'<button class="lnk" data-undo="'+p.id+'" style="align-self:flex-start">Undo AI edit</button>':'')+'<span class="inp" style="align-items:flex-start"><textarea id="d'+p.id+'" rows="3" data-id="'+p.id+'" data-f="d">'+esc(p.d)+'</textarea></span><span class="inp"><input data-id="'+p.id+'" data-f="t" value="'+esc(p.t.join(', '))+'" placeholder="Tech, comma separated"></span><button class="btn p sm ait" type="button" data-m="m'+p.id+'" style="align-self:flex-end">✨ AI Assist</button><div class="aim" id="m'+p.id+'" style="top:auto;bottom:100%"><button data-ai="p'+p.id+':polish">✨ Polished description</button><button data-ai="p'+p.id+':features">📋 Highlight features</button><button data-ai="p'+p.id+':short">✂️ One line summary</button></div></div>'}).join('');pv()}
+  function go(el,txt,set,uk,old,uid,done){if(uk)U[uk]=old;var i=0,iv=setInterval(function(){i+=3;var v=txt.slice(0,i);el.value=v;set(v);if(i>=txt.length){clearInterval(iv);el.value=txt;set(txt);if(uid)$('#'+uid).hidden=false;if(done)done();toast('Updated with AI. You can undo it')}},16)}
+  function ai(key){var f=key.split(':')[0],m=key.split(':')[1];
+    if(f==='title'){var o={polish:'Senior Full-Stack Engineer building scalable web and AI products',startup:'Product-minded full-stack developer and AI builder',concise:'Full-stack developer'};go($('#et'),o[m],function(v){S.title=v;pv()},'t',S.title,'ut')}
+    else if(f==='bio'){var sk=S.skills.slice(0,4).join(', ')||'React and Python',pn=S.projects.map(function(p){return p.name}).join(', ')||'modern web apps';var o2={professional:'Results-driven engineer specializing in '+sk+'. I design responsive, user-centered products and bring AI into real workflows.',recruiter:'Full-stack engineer with hands-on experience shipping '+pn+'. I care about clean architecture, clear interfaces and measurable impact.',shorter:'Full-stack developer building fast, intuitive web apps with '+sk+'.',scratch:'Hi, I’m '+(S.name||'a developer')+'. I connect clean design with scalable engineering, most recently on '+pn+' using '+sk+'.'};go($('#eb'),o2[m],function(v){S.bio=v;pv()},'b',S.bio,'ub')}
+    else{var id=f.slice(1),p=S.projects.filter(function(x){return String(x.id)===id})[0];if(!p)return;var te=p.t.slice(0,3).join(', ')||'modern web tools',o3={polish:'Engineered '+p.name+' with '+te+', delivering a fast, responsive experience on a clean modular architecture.',features:'Built with '+te+'. Highlights: real-time sync, intuitive workflows, automated data handling and a scalable API.',short:'A '+te+' app that streamlines everyday workflows.'};go($('#d'+id),o3[m],function(v){p.d=v;pv()},'p'+id,p.d,null,pl)}}
+  document.addEventListener('click',function(e){var b=e.target.closest('.ait'),a=e.target.closest('[data-ai]'),x=e.target.closest('#emenu [data-a]');$$('.aim').forEach(function(m){m.classList.remove('on')});
+    if(b){$('#'+b.dataset.m).classList.add('on');return}
+    if(a)ai(a.dataset.ai);
+    if(e.target.closest('#emore'))$('#emenu').classList.add('on');
+    if(x){var k=x.dataset.a;if(k==='share'){try{navigator.clipboard.writeText('https://portfoliogenie.app/u/nour-hassan')}catch(z){}toast('Link copied')}else if(k==='pdf')$('#mpdf').classList.add('on');else $('#mdp').classList.add('on')}});
+  $('#eprojs').addEventListener('input',function(e){var el=e.target,p=S.projects.filter(function(x){return String(x.id)===el.dataset.id})[0];if(!p)return;if(el.dataset.f==='t')p.t=el.value.split(',').map(function(s){return s.trim()}).filter(Boolean);else if(el.dataset.f==='name')p.name=el.value;else p.d=el.value;pv()});
+  $('#eprojs').addEventListener('click',function(e){var d=e.target.closest('[data-del]'),u=e.target.closest('[data-undo]');if(d){S.projects=S.projects.filter(function(p){return String(p.id)!==d.dataset.del});pl();toast('Project removed')}if(u){var p=S.projects.filter(function(x){return String(x.id)===u.dataset.undo})[0];if(p){p.d=U['p'+p.id];delete U['p'+p.id];pl();toast('Original description restored')}}});
+  $('#en').oninput=function(){S.name=this.value;pv()};$('#et').oninput=function(){S.title=this.value;pv()};$('#eb').oninput=function(){S.bio=this.value;pv()};
+  $('#es').oninput=function(){S.skills=this.value.split(',').map(function(s){return s.trim()}).filter(Boolean);pv()};
+  $('#ut').onclick=function(){$('#et').value=U.t;S.title=U.t;pv();this.hidden=true};$('#ub').onclick=function(){$('#eb').value=U.b;S.bio=U.b;pv();this.hidden=true};
+  $('#esx').onclick=function(){var s=S.skills.slice();S.projects.forEach(function(p){p.t.forEach(function(t){if(s.indexOf(t)<0)s.push(t)})});S.skills=s;$('#es').value=s.join(', ');pv();toast('Skills added from your projects')};
+  $('#eadd').onclick=function(){S.projects.unshift({id:Date.now(),name:'New project',d:'What this project does and the problem it solves.',t:['JavaScript'],s:0});pl()};
+  $('#egh').onclick=function(){$('#rl').innerHTML=R2.map(function(r){return '<label class="rp"><input type="checkbox" value="'+r.id+'" checked><span style="flex:1"><b>'+esc(r.n)+'</b><small>'+esc(r.r)+' · ★ '+r.s+'</small></span></label>'}).join('');$('#mgh').classList.add('on')};
+  $('#rim').onclick=function(){var w=$('#rai').checked,n=0;$$('#rl input:checked').forEach(function(c){var r=R2.filter(function(x){return x.id===c.value})[0];if(r&&!S.projects.some(function(p){return p.name.toLowerCase()===r.n.toLowerCase()})){S.projects.unshift({id:Date.now()+n++,name:r.n,d:w?r.p:r.r,t:r.t,s:r.s})}});$('#mgh').classList.remove('on');pl();toast(n+' projects imported')};
+  $('#ydp').onclick=function(){S.name='';S.title='';S.bio='';S.skills=[];S.projects=[];U={};$('#en').value='';$('#et').value='';$('#eb').value='';$('#es').value='';pl();$('#mdp').classList.remove('on');toast('Portfolio cleared')};
+  $('#en').value=S.name;$('#et').value=S.title;$('#eb').value=S.bio;$('#es').value=S.skills.join(', ');pl();
+  var P={name:'Nour Hassan',title:'Frontend developer · Cairo',gh:'https://github.com/nour-hassan',img:''},tmpImg='';
+  function av(el){el.style.background=P.img?'url('+P.img+') center/cover':''}
+  function pfill(){tmpImg='';$('#epn').value=P.name;$('#ept').value=P.title;$('#epg').value=P.gh;av($('#epav'))}pfill();
+  addEventListener('hashchange',function(){if(location.hash==='#editprofile')pfill()});
+  $('#epf').onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){tmpImg=r.result;$('#epav').style.background='url('+tmpImg+') center/cover'};r.readAsDataURL(f)};
+  $('#eps').onclick=function(){var n=$('#epn').value.trim(),t=$('#ept').value.trim(),g=$('#epg').value.trim();
+    if(!n){toast('Enter your name');return}
+    if(g&&g.toLowerCase().indexOf('github.com/')<0){toast('Enter a valid GitHub link');return}
+    P.name=n;P.title=t;P.gh=g;if(tmpImg)P.img=tmpImg;
+    $('#phn').textContent=n;$('#pht').textContent=t;var l=$('#phg');l.href=g;l.textContent=g.replace('https://','').replace('http://','');l.parentNode.style.display=g?'':'none';av($('#pav'));
+    S.name=n;$('#en').value=n;pv();toast('Profile saved');location.hash='#profile'};
+  $('#gen').onclick=function(){$('#mpdf').classList.remove('on');toast('Your PDF is ready')};
+  $$('[data-c]').forEach(function(b){b.onclick=function(){$$('.md').forEach(function(m){m.classList.remove('on')})}});
+  
+  $('#cf').onsubmit=function(e){e.preventDefault();$('#cok').classList.add('on')};
+  $('#ogen').onclick=function(){var c=$('#ocomp').value.trim();if(!c){toast('Enter a company name first');return}
+    var r=$('#orole').value.trim()||'Frontend developer',t=$('#otone').value,p=[].map.call($$('#oprojs input:checked'),function(x){return x.value}),l=p.length?p.join(', '):'my recent projects';
+    var hi=(t==='Formal'?'Dear ':'Hi ')+c+' team,',ln='My portfolio: https://nour.portfoliogenie.app',m;
+    if(t==='Short'){m=hi+'\n\nI’m Nour, a frontend developer interested in the '+r+' role at '+c+'. A few things I’ve built: '+l+'.\n\n'+ln+'\n\nOpen to a quick chat?\n\nNour'}
+    else{m=hi+'\n\nI’m Nour, a frontend developer, and I’d love to contribute to '+c+' as '+r+'. These projects are the closest match: '+l+'.\n\nMy proposal: in the first 30 days I would review your product, ship one small improvement, and share what I learn.\n\n'+ln+'\n\n'+(t==='Formal'?'Thank you for your time. I would welcome a short call.\n\nKind regards,\nNour':'Happy to share more on a short call.\n\nThanks,\nNour')}
+    $('#omsg').value=m;toast('Draft ready. Review it before sending')};
+  $('#ocopy').onclick=function(){var a=$('#omsg');if(!a.value){toast('Generate a draft first');return}
+    try{navigator.clipboard.writeText(a.value).then(function(){toast('Message copied')},function(){a.select();toast('Press Ctrl+C to copy')})}catch(e){a.select();toast('Press Ctrl+C to copy')}};
+  $('#oopen').onclick=function(){var c=$('#ocomp').value.trim();if(!c){toast('Enter a company name first');return}
+    window.open('https://www.linkedin.com/search/results/companies/?keywords='+encodeURIComponent(c),'_blank','noopener')};
+})();
+</script>
+</body>
+</html>
