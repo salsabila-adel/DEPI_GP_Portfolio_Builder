@@ -1,0 +1,96 @@
+:root{
+    --main-color: #A5124B;
+    --input-bg:#F6EDF1;
+    --border-soft: #E8D5DA;
+    --text-dark: #1A1214;
+    --text-muted: #6B5A60;
+    --placeholder: #7A6F74;
+    --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-heading: 'Kalam', 'Segoe Print', 'Comic Sans MS', cursive;
+}
+.page{
+    min-height: 100vh;
+    background-color: #FBF5F7;
+}
+.formSection{
+   
+    font-family: var(--font-body);
+    color: var(--text-dark);
+     flex: 1;
+}
+
+.iconContainer{
+    position: absolute;
+    top:45px;
+    padding-left:10px ;
+}
+.mainInput{
+   padding-left: 35px !important;
+   height: 50px !important;
+    background-color: var(--input-bg) !important;
+    border: 1px solid var(--border-soft) !important;
+    border-radius: 14px !important;
+    color: var(--text-dark) !important;
+}
+.mainInput::placeholder{
+    color: var(--placeholder);
+    opacity: 1;
+}
+.mainInput:focus{
+    background-color: var(--input-bg) !important;
+    border-color: var(--main-color) !important;
+    box-shadow: 0 0 0 2px var(--main-color) !important;
+    outline: 0 ;
+}
+
+.checkBox:checked {
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color) !important;
+    box-shadow: 0 0 0 .2rem rgba(165, 18, 75, .25) !important;
+}
+.checkBox{
+  border-color: var(--text-muted) !important;
+  border-radius: 6px !important;
+  
+}
+.submitBtn{
+    background-color: var(--main-color) !important;
+    color: white !important;
+    text-align: center;
+    font-weight: 600;
+}
+.submitBtn:hover{
+    background-color: rgb(146, 34, 77) !important ;
+}
+.footer{
+    
+    font-family: var(--font-body);
+    color: var(--text-muted);
+    display: flow-root;
+    padding: 6px;
+}
+.loginLink{
+    color: var(--main-color);
+     font-weight: 600;
+}
+.formSection h2{
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: var(--text-dark);
+}
+.formSection h6{
+    font-weight: 400;
+    color: var(--text-muted);
+}
+.formSection label{
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-dark);
+}
+.formSection input[type="checkbox"] ~ label{
+    font-weight: 400;
+}
+.formSection p{
+    color: var(--text-muted);
+}
